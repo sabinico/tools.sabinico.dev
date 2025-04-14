@@ -1,15 +1,14 @@
 <template>
+  <v-breadcrumbs :items="breadcrumbs">
+    <template #divider>
+      <v-icon icon="mdi-chevron-right" />
+    </template>
+  </v-breadcrumbs>
   <v-container class="fill-height" max-width="900">
     <div>
-      <v-img
-        class="mb-4"
-        height="150"
-        src="@/assets/logo.png"
-      />
-
       <div class="mb-8 text-center">
-        <div class="text-body-2 font-weight-light mb-n1">Welcome to</div>
-        <h1 class="text-h2 font-weight-bold">Sabinico Tools</h1>
+        <div class="text-body-2 font-weight-light mb-n1"><a class="text-white text-decoration-none" href="/">Sabinico Tools</a></div>
+        <h1 class="text-h2 font-weight-bold">Vintage Story</h1>
       </div>
 
       <v-row>
@@ -17,7 +16,6 @@
           <v-card
             class="py-4"
             color="surface-variant"
-            image="https://cdn.vuetifyjs.com/docs/images/one/create/feature.png"
             rounded="lg"
             variant="tonal"
           >
@@ -57,13 +55,23 @@
 </template>
 
 <script setup>
-  import logovintage from '../assets/games/vintage_story-card.png';
+  const breadcrumbs = [
+    {
+      title: 'Sabinico Tools',
+      disabled: false,
+      href: '/',
+    },
+    {
+      title: 'Vintage Story',
+      disabled: false,
+      href: '/vintage-story',
+    },
+  ]
   const links = [
     {
-      href: '/vintage-story',
-      icon: logovintage,
-      subtitle: 'Utilidades para administradores',
-      title: 'Vintage Story',
+      href: '/vintage-story/logs-viewer',
+      subtitle: 'Visualizador de archivos de logs de Vintage Story',
+      title: 'Logs Viewer',
     },
   ]
 </script>
