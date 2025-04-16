@@ -3,6 +3,15 @@
     <template #divider>
       <v-icon icon="mdi-chevron-right" />
     </template>
+    <template #item="{ item }">
+      <v-breadcrumbs-item
+        class="text-subtitle-2 crumb-item"
+        :disabled="item.disabled"
+        :to="item.href"
+      >
+        {{ item.title }}
+      </v-breadcrumbs-item>
+    </template>
   </v-breadcrumbs>
   <v-container class="fill-height" max-width="900">
     <div>
@@ -41,11 +50,11 @@
           <v-card
             class="py-4"
             color="surface-variant"
-            :href="link.href"
             :image="link.icon"
             rounded="lg"
             :subtitle="link.subtitle"
             :title="link.title"
+            :to="link.href"
             variant="tonal"
           />
         </v-col>

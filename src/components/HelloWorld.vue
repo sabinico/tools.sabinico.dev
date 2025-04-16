@@ -43,11 +43,11 @@
           <v-card
             class="py-4"
             color="surface-variant"
-            :href="link.href"
             :image="link.icon"
             rounded="lg"
             :subtitle="link.subtitle"
             :title="link.title"
+            :to="link.href"
             variant="tonal"
           />
         </v-col>
@@ -58,12 +58,19 @@
 
 <script setup>
   import logovintage from '../assets/games/vintage_story-card.png';
+  import logoBluePrince from '../assets/games/blue_prince/blue_prince-card.png';
   const links = [
     {
       href: '/vintage-story',
       icon: logovintage,
       subtitle: 'Utilidades para administradores',
       title: 'Vintage Story',
+    },
+    {
+      href: '/blue-prince',
+      icon: logoBluePrince,
+      subtitle: 'Cuaderno de notas para jugadores',
+      title: 'Blue Prince',
     },
   ]
 </script>

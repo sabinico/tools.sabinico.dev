@@ -3,6 +3,15 @@
     <template #divider>
       <v-icon icon="mdi-chevron-right" />
     </template>
+    <template #item="{ item }">
+      <v-breadcrumbs-item
+        class="text-subtitle-2 crumb-item"
+        :disabled="item.disabled"
+        :to="item.href"
+      >
+        {{ item.title }}
+      </v-breadcrumbs-item>
+    </template>
   </v-breadcrumbs>
   <v-file-upload
     v-model="files"
