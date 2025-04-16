@@ -25,7 +25,7 @@
       </div>
 
 
-      <v-row>
+      <v-row class="mb-8">
         <v-col cols="12">
           <v-card
             class="py-4"
@@ -61,7 +61,7 @@
             class="py-4"
             color="surface-variant"
             :icon="link.icon"
-            :image="link.image"
+            :image="link.unlock ? (store.unlockedTools.includes(link.unlock) ? link.image : null) : link.image"
             rounded="lg"
             :subtitle="link.unlock ? (store.unlockedTools.includes(link.unlock) ? link.subtitle : '??? ??????? ??? ?????????') : link.subtitle"
             :title="link.unlock ? (store.unlockedTools.includes(link.unlock) ? link.title : '????????') : link.title"
@@ -78,6 +78,10 @@
   import { useBluePrinceStore } from '@/stores/blue-prince';
 
   import imgCardBlueKey from '../../assets/games/blue_prince/blue_prince-bluekey-card.png';
+  import imgCardJournal from '../../assets/games/blue_prince/blue_prince-journal-card.png';
+  import imgCardSteps from '../../assets/games/blue_prince/blue_prince-steps-card.png';
+  import imgCardBilliard from '../../assets/games/blue_prince/blue_prince-billiard-card.png';
+  import imgCardShrine from '../../assets/games/blue_prince/blue_prince-shrine-card.png';
 
   const store = useBluePrinceStore()
 
@@ -98,17 +102,33 @@
       href: '/blue-prince/tasks',
       subtitle: 'Una lista para trackear tus objetivos',
       title: 'Objetivos pendientes',
+      image: imgCardSteps,
     },
     {
       href: '/blue-prince/journal-notes',
-      subtitle: 'Un diario para escribir y guardar tus anotaciones',
+      subtitle: 'Para escribir y guardar tus notas',
       title: 'Diario de notas',
+      image: imgCardJournal,
+    },
+    {
+      href: '/blue-prince',
+      subtitle: 'Resuelve el puzzle con explicaciones',
+      title: 'Puzzle de dardos',
+      unlock: 'room_billiard',
+      image: imgCardBilliard,
     },
     {
       href: '/blue-prince',
       subtitle: 'Trackea tu progreso descubriendo las letras secretas',
       title: 'Mensaje de 44 letras',
       unlock: 'room_paintings',
+    },
+    {
+      href: '/blue-prince/shrine',
+      subtitle: 'Listado de beneficios del shrine',
+      title: 'Ofrendas Santas',
+      unlock: 'room_shrine',
+      image: imgCardShrine,
     },
 
   ]

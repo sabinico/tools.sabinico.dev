@@ -15,24 +15,25 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col v-for="(tool, key) in tools" :key="key" cols="12">
-                <v-row align="center">
-                  <v-col cols="1">
-                    <v-switch
-                      v-model="tool.unlocked"
-                      color="blue"
-                      hide-details
-                      inset
-                      @update:model-value="value => unlockTool(tool.toolname, value)"
-                    />
-                  </v-col>
-                  <v-col cols="11">
-                    <v-card-title>{{ tool.unlocked ? tool.title : '?????????' }}</v-card-title>
-                    <v-card-subtitle><span v-html="tool.description" /></v-card-subtitle>
-                  </v-col>
-                </v-row>
-
-              </v-col>
+              <template v-for="(tool, key) in tools" :key="key">
+                <v-col v-if="tool.requires == undefined || hasRequiredUnlocks(tool.requires)" cols="12">
+                  <v-row align="center">
+                    <v-col cols="1">
+                      <v-switch
+                        v-model="tool.unlocked"
+                        color="blue"
+                        hide-details
+                        inset
+                        @update:model-value="value => unlockTool(tool.toolname, value)"
+                      />
+                    </v-col>
+                    <v-col cols="11">
+                      <v-card-title>{{ tool.unlocked ? tool.title : '?????????' }}</v-card-title>
+                      <v-card-subtitle><span v-html="tool.description" /></v-card-subtitle>
+                    </v-col>
+                  </v-row>
+                </v-col>
+              </template>
             </v-row>
           </v-container>
         </v-card-text>
@@ -49,22 +50,38 @@
   </v-dialog>
 </template>
 <script setup>
-  import { computed, onMounted, ref } from 'vue';
+  import { onMounted, ref } from 'vue';
+  import { storeToRefs } from 'pinia'
   import { useBluePrinceStore } from '@/stores/blue-prince';
 
   const store = useBluePrinceStore()
+  const { hasRequiredUnlocks } = storeToRefs(store)
+
   const tools = ref({
+    room_billiard: {
+      title: 'PUZZLE DE DARDOS',
+      description: 'Has <b>DESBLOQUEADO</b> y <b>ENTRADO</b> en el <b class="text-blue-darken-1">BILLAR</b>',
+      toolname: 'room_billiard',
+      unlocked: false,
+    },
     room_paintings: {
       title: 'MENSAJE DE 44 LETRAS',
       description: 'Has <b>DESBLOQUEADO</b> y <b>ENTRADO</b> en el <b class="text-blue-darken-1">ESTUDIO</b>',
       toolname: 'room_paintings',
       unlocked: false,
     },
-    test1: {
-      title: 'TEST 1',
-      description: 'Has <b>DESBLOQUEADO</b> y <b>ENTRADO</b> en el <b class="text-blue-darken-1">ESTUDIO</b>',
-      toolname: 'test1',
+    room_garage: {
+      title: 'HABITACIONES EXTERIORES DESBLOQUEADAS',
+      description: 'Has <b>ENTRADO</b> en el <b class="text-blue-darken-1">GARAJE</b> y <b>ABIERTO</b> la puerta exterior',
+      toolname: 'room_garage',
       unlocked: false,
+    },
+    room_shrine: {
+      title: 'OFRENDAS SANTAS',
+      description: 'Has <b>DESBLOQUEADO</b> y <b>ENTRADO</b> en el <b class="text-blue-darken-1">SHRINE</b>',
+      toolname: 'room_shrine',
+      unlocked: false,
+      requires: ['room_garage'],
     },
   })
 
