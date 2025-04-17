@@ -118,17 +118,17 @@
       image: imgCardBilliard,
     },
     {
-      href: '/blue-prince',
-      subtitle: 'Trackea tu progreso descubriendo las letras secretas',
-      title: 'Mensaje de 44 letras',
-      unlock: 'room_paintings',
-    },
-    {
       href: '/blue-prince/shrine',
       subtitle: 'Listado de beneficios del shrine',
       title: 'Ofrendas Santas',
       unlock: 'room_shrine',
       image: imgCardShrine,
+    },
+    {
+      href: '/blue-prince',
+      subtitle: 'Trackea tu progreso descubriendo las letras secretas',
+      title: 'Mensaje de 44 letras',
+      unlock: 'room_paintings',
     },
 
   ]

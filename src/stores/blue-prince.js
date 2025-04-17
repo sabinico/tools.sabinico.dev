@@ -3,9 +3,11 @@ import { defineStore } from 'pinia'
 
 export const useBluePrinceStore = defineStore('blueprince', {
   state: () => ({
+    devmode: false,
     tasks: [],
     unlockedTools: [],
     journalNotes: [],
+    shrine: [],
   }),
   getters: {
     hasUnlockedTool (state) {
@@ -20,6 +22,17 @@ export const useBluePrinceStore = defineStore('blueprince', {
           }
         });
         return value;
+      }
+    },
+    hasUnlockedShrineBlessing (state) {
+      return b => {
+        let val = false;
+        b.coins.forEach(c => {
+          if(state.shrine.includes(c)){
+            val = true;
+          }
+        });
+        return val;
       }
     },
   },

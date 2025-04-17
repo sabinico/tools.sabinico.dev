@@ -16,7 +16,7 @@
           <v-container>
             <v-row>
               <template v-for="(tool, key) in tools" :key="key">
-                <v-col v-if="tool.requires == undefined || hasRequiredUnlocks(tool.requires)" cols="12">
+                <v-col v-if="(tool.requires == undefined || hasRequiredUnlocks(tool.requires)) && (!devtools.includes(key) || store.devmode)" cols="12">
                   <v-row align="center">
                     <v-col cols="1">
                       <v-switch
@@ -51,12 +51,13 @@
 </template>
 <script setup>
   import { onMounted, ref } from 'vue';
-  import { storeToRefs } from 'pinia'
+  import { storeToRefs } from 'pinia';
   import { useBluePrinceStore } from '@/stores/blue-prince';
 
   const store = useBluePrinceStore()
   const { hasRequiredUnlocks } = storeToRefs(store)
 
+  const devtools = ['room_billiard','room_paintings']
   const tools = ref({
     room_billiard: {
       title: 'PUZZLE DE DARDOS',
