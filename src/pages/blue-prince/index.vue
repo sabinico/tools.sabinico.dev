@@ -82,6 +82,7 @@
   import imgCardSteps from '../../assets/games/blue_prince/blue_prince-steps-card.png';
   import imgCardBilliard from '../../assets/games/blue_prince/blue_prince-billiard-card.png';
   import imgCardShrine from '../../assets/games/blue_prince/blue_prince-shrine-card.png';
+  import imgCardStudy from '../../assets/games/blue_prince/blue_prince-study-card.png';
 
   const store = useBluePrinceStore()
 
@@ -125,10 +126,11 @@
       image: imgCardShrine,
     },
     {
-      href: '/blue-prince',
-      subtitle: 'Trackea tu progreso descubriendo las letras secretas',
+      href: '/blue-prince/study-message',
+      subtitle: 'Descubre el mensaje secreto',
       title: 'Mensaje de 44 letras',
       unlock: 'room_paintings',
+      image: imgCardStudy,
     },
 
   ]
