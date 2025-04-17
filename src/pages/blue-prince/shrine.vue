@@ -80,17 +80,11 @@
             <p class="text-body-2 my-4" v-html="blessing.description" />
             <div class="d-flex align-center justify-center flex-wrap text-center mx-auto mb-4">
               <template v-for="i in 5" :key="`blessing-${blessing.key}-${i}`">
-                <div v-if="store.shrine.includes(blessing.min + (16 * (i - 1))) || store.shrine.includes((blessing.min + 1) + (16 * (i - 1)))" class="mx-2 d-flex flex-column align-center justify-center flex-wrap text-center ">
+                <div v-if="store.shrine.includes(blessing.min + (16 * (i - 1))) || store.shrine.includes((blessing.min + 1) + (16 * (i - 1))) || showEverything" class="mx-2 d-flex flex-column align-center justify-center flex-wrap text-center ">
                   <span class="text-amber text-body-2 d-flex align-center justify-center">
-                    <template v-if="store.shrine.includes(blessing.min + (16 * (i - 1)))">
-                      {{ blessing.min + (16 * (i - 1)) }}
-                    </template>
-                    <template v-if="store.shrine.includes(blessing.min + (16 * (i - 1))) && store.shrine.includes((blessing.min + 1) + (16 * (i - 1)))">
-                      -
-                    </template>
-                    <template v-if="store.shrine.includes((blessing.min + 1) + (16 * (i - 1)))">
-                      {{ (blessing.min + 1) + (16 * (i - 1)) }}
-                    </template>
+                    <template v-if="store.shrine.includes(blessing.min + (16 * (i - 1))) || showEverything">{{ blessing.min + (16 * (i - 1)) }}</template>
+                    <template v-if="(store.shrine.includes(blessing.min + (16 * (i - 1))) && store.shrine.includes((blessing.min + 1) + (16 * (i - 1)))) || showEverything">-</template>
+                    <template v-if="store.shrine.includes((blessing.min + 1) + (16 * (i - 1))) || showEverything">{{ (blessing.min + 1) + (16 * (i - 1)) }}</template>
                     <v-img
                       class="ml-1"
                       height="16"
