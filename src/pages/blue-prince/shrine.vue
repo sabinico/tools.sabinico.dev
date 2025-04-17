@@ -170,6 +170,7 @@
   import imgRedgeneral from '@/assets/games/blue_prince/shrine/blessing_redgeneral.png'
   import imgTinkerer from '@/assets/games/blue_prince/shrine/blessing_tinkerer.png'
   import imgMonk from '@/assets/games/blue_prince/shrine/blessing_monk.png'
+  import imgBerrypicker from '@/assets/games/blue_prince/shrine/blessing_berrypicker.png'
 
   // Data
   const showEverything = ref(false);
@@ -195,7 +196,7 @@
     {
       key: 'dancer',
       title: 'Dancer',
-      description: `While drafting, you may pay gems to spin floor plans, each spin will cost you <span style="color: #dda4e1;">-1</span><img class="ml-1" src="${iconGem}" style="width: 16px; height: 16px; vertical-align: middle;" />`,
+      description: `While drafting, you may pay gems to spin floor plans.<br />Each spin will cost you <span style="color: #dda4e1;">-1</span><img class="ml-1" src="${iconGem}" style="width: 16px; height: 16px; vertical-align: middle;" />`,
       color: '#dda4e1',
       coins: [],
       min: 1,
@@ -258,10 +259,11 @@
     {
       key: 'berrypicker',
       title: 'Berry Picker',
-      description: 'When drafting, gives the option to instead pick a berry to draw a random floorplan ignoring rarity',
+      description: 'When drafting, gives the option to instead pick a <span style="color: #ac3f63;">berry</span> to draw a random floorplan ignoring rarity',
+      color: '#ac3f63',
       coins: [],
       min: 15,
-      image: null,
+      image: imgBerrypicker,
     },
   ]
   const store = useBluePrinceStore()
