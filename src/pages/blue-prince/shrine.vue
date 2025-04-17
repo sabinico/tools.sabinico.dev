@@ -159,7 +159,7 @@
 
 </template>
 <script setup>
-  import { computed, onBeforeMount, onMounted, ref } from 'vue';
+  import { onBeforeMount, onMounted, ref } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useBluePrinceStore } from '@/stores/blue-prince';
 
@@ -325,13 +325,6 @@
       store.shrine.push(newOffering.value)
     }
     isActive.value = false
-  }
-
-  const testOffering = () => {
-    blessings.forEach(b => {
-      hasUnlockedShrineBlessing.value(b)
-    });
-
   }
 
 </script>
