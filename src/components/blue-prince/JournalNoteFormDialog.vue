@@ -52,6 +52,18 @@
                   variant="outlined"
                 />
               </v-col>
+              <v-col cols="12">
+                <v-combobox
+                  v-model="newNote.tags"
+                  chips
+                  clearable
+                  hint="Puedes crear tus propias etiquetas escribiendolas y pulsando enter"
+                  :items="currentTags"
+                  label="Tags"
+                  multiple
+                  variant="outlined"
+                />
+              </v-col>
 
             </v-row>
           </v-form>
@@ -76,7 +88,7 @@
   </v-dialog>
 </template>
 <script setup>
-  import { onBeforeUpdate, ref } from 'vue';
+  import { computed, onBeforeUpdate, ref } from 'vue';
   import { useBluePrinceStore } from '@/stores/blue-prince';
 
   // Props
@@ -138,6 +150,19 @@
       newNote.value = props.note
     }
 
+  })
+
+  // Computed
+  const currentTags = computed(() => {
+    const tags = [];
+    store.journalNotes.forEach(note => {
+      note.tags.forEach(tag => {
+        if(!tags.includes(tag)){
+          tags.push(tag)
+        }
+      });
+    });
+    return tags
   })
 
   // Methods

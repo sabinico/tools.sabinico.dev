@@ -16,11 +16,43 @@
   <v-container>
     <v-row>
       <v-col cols="4">
-        <v-card class="mx-auto" max-width="400">
+        <v-card class="mx-auto">
           <v-toolbar color="purple">
             <v-toolbar-title>Diario de notas</v-toolbar-title>
+            <v-btn icon="mdi-magnify" variant="text" @click="toggleSearch" />
+            <v-btn icon="mdi-filter" variant="text" @click="toggleFilters" />
             <JournalNoteFormDialog mode="create" />
           </v-toolbar>
+          <v-expand-transition>
+            <v-toolbar v-show="expandSearch" color="purple">
+              <v-text-field
+                v-model="searchParams"
+                class="mx-4"
+                hide-details
+                label="Buscar notas"
+                prepend-inner-icon="mdi-magnify"
+                variant="outlined"
+              />
+            </v-toolbar>
+          </v-expand-transition>
+          <v-expand-transition>
+            <v-toolbar v-show="expandFilters" color="purple">
+
+              <v-autocomplete
+                v-model="searchFilters"
+                chips
+                class="mx-4"
+                clearable
+                hide-details
+                :items="currentTags"
+                label="Filtrar por tags"
+                multiple
+                prepend-inner-icon="mdi-tag"
+                variant="outlined"
+              />
+            </v-toolbar>
+          </v-expand-transition>
+
 
           <v-list
             ref="listNotes"
@@ -96,12 +128,6 @@
         </div>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="12">
-        <v-spacer />
-        <v-alert text="En futuras versiones queremos añadir etiquetas (tags) para ordenar, agrupar y clasificar las notas, un buscador de notas, filtros y la opción para borrar una nota" title="ROADMAP" type="info" />
-      </v-col>
-    </v-row>
   </v-container>
 
 </template>
@@ -132,6 +158,10 @@
   const listNotes = ref(null)
   const listPostits = ref(null)
   const noteSelection = ref([])
+  const expandSearch = ref(false)
+  const searchParams = ref(null)
+  const expandFilters = ref(false)
+  const searchFilters = ref([])
 
   // Hooks
   onMounted(() => {
@@ -152,20 +182,51 @@
   })
 
   // Computeds
+  const filteredJournal = computed(() => {
+    let all = store.journalNotes
+    if(searchParams.value){
+      all = all.filter( t => t.title.toLowerCase().includes(searchParams.value.toLowerCase()) || t.details.toLowerCase().includes(searchParams.value.toLowerCase()) )
+    }
+    if(searchFilters.value){
+      searchFilters.value.forEach(filter => {
+        all = all.filter( t => t.tags.includes(filter))
+      });
+    }
+    return all
+  })
   const journalNotes = computed(() => {
-    return store.journalNotes.filter( t => t.type == 'note' )
+    return filteredJournal.value.filter( t => t.type == 'note' )
   })
   const journalPostits = computed(() => {
-    return store.journalNotes.filter( t => t.type == 'postit' )
+    return filteredJournal.value.filter( t => t.type == 'postit' )
   })
   const selectedNote = computed(() => {
     return store.journalNotes.find( t => t.id == noteSelection.value[0] )
   })
+  const currentTags = computed(() => {
+    const tags = [];
+    store.journalNotes.forEach(note => {
+      note.tags.forEach(tag => {
+        if(!tags.includes(tag)){
+          tags.push(tag)
+        }
+      });
+    });
+    return tags
+  })
 
   // Methods
   const deleteNote = () => {
+    const id = noteSelection.value[0]
     listNotes.value.select(null)
     listPostits.value.select(null)
+    store.journalNotes = store.journalNotes.filter( t => t.id != id)
+  }
+  const toggleSearch = () => {
+    expandSearch.value = !expandSearch.value
+  }
+  const toggleFilters = () => {
+    expandFilters.value = !expandFilters.value
   }
 
 </script>
