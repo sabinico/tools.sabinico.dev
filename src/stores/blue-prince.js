@@ -9,6 +9,7 @@ export const useBluePrinceStore = defineStore('blueprince', {
     journalNotes: [],
     shrine: [],
     paintings: {},
+    redenvelopes: [],
   }),
   getters: {
     hasUnlockedTool (state) {

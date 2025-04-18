@@ -83,6 +83,7 @@
   import imgCardBilliard from '../../assets/games/blue_prince/blue_prince-billiard-card.png';
   import imgCardShrine from '../../assets/games/blue_prince/blue_prince-shrine-card.png';
   import imgCardStudy from '../../assets/games/blue_prince/blue_prince-study-card.png';
+  import imgCardRedEnvelope from '../../assets/games/blue_prince/blue_prince-redenvelope-card.png';
 
   const store = useBluePrinceStore()
 
@@ -131,6 +132,13 @@
       title: 'Mensaje de 44 letras',
       unlock: 'room_paintings',
       image: imgCardStudy,
+    },
+    {
+      href: '/blue-prince/safes-codes',
+      subtitle: 'Códigos de las cajas fuertes',
+      title: 'Cajas Fuertes',
+      unlock: 'red_envelopes_safes',
+      image: imgCardRedEnvelope,
     },
 
   ]

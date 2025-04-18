@@ -71,6 +71,13 @@
       toolname: 'room_paintings',
       unlocked: false,
     },
+    red_envelopes_safes: {
+      title: 'CÓDIGOS CAJAS FUERTES',
+      description: 'Has <b>ENCONTRADO</b> y <b>DESBLOQUEADO</b> con un código una <b class="text-blue-darken-1">CAJA FUERTE</b>',
+      toolname: 'red_envelopes_safes',
+      unlocked: false,
+      requires: ['room_paintings'],
+    },
     room_garage: {
       title: 'HABITACIONES EXTERIORES DESBLOQUEADAS',
       description: 'Has <b>ENTRADO</b> en el <b class="text-blue-darken-1">GARAJE</b> y <b>ABIERTO</b> la puerta exterior',
