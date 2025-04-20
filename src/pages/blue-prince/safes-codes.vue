@@ -89,7 +89,6 @@
   import { useBluePrinceStore } from '@/stores/blue-prince';
 
   import iconGem from '@/assets/games/blue_prince/blue_prince-gem-icon.png'
-  import iconTime from '@/assets/games/blue_prince/blue_prince-time-icon.png'
 
 
   // Data
