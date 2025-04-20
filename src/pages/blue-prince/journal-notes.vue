@@ -105,9 +105,9 @@
           <v-sheet
             class="d-flex flex-column flex-wrap mx-auto px-4"
             elevation="4"
-            height="250"
+            min-height="250"
           >
-            <h2 class="text-h4 font-weight-black mt-4">{{ selectedNote.title }}</h2>
+            <h2 class="text-h4 font-weight-black mt-4 w-100">{{ selectedNote.title }}</h2>
             <p class="text-body-2 mt-4" v-html="selectedNote.details.replaceAll('\n','<br />')" />
           </v-sheet>
         </template>
@@ -116,9 +116,9 @@
             class="d-flex flex-column align-center justify-center flex-wrap text-center mx-auto px-4"
             :color="selectedNote.color"
             elevation="4"
-            height="250"
+            min-height="250"
           >
-            <h2 class="text-h4 font-weight-black">{{ selectedNote.title }}</h2>
+            <h2 class="text-h4 font-weight-black w-100">{{ selectedNote.title }}</h2>
             <p class="text-body-2 mt-4" v-html="selectedNote.details.replaceAll('\n','<br />')" />
           </v-sheet>
         </template>
