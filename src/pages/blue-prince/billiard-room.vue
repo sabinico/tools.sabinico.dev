@@ -23,7 +23,7 @@
         </div>
       </v-col>
       <v-col
-        cols="6"
+        cols="8"
       >
         <v-sheet
           class="d-flex flex-column align-center justify-center flex-wrap text-center mx-auto px-4"
@@ -58,13 +58,69 @@
             </template>
           </v-row>
           <div class="d-flex align-center justify-center flex-wrap text-center mx-auto px-4">
-            <v-btn class="mr-4" color="blue" @click="addModifier">ADD MODIIFIER</v-btn>
-            <v-btn v-if="modifiers.length > 0" color="red" variant="text" @click="removeModifier">REMOVE LAST MODIIFIER</v-btn>
+            <v-btn color="blue" @click="addModifier">ADD MODIIFIER</v-btn>
+            <v-btn
+              v-if="modifiers.length > 0"
+              class="ml-4"
+              color="red"
+              variant="text"
+              @click="removeModifier"
+            >REMOVE LAST MODIIFIER</v-btn>
           </div>
 
           <h3 class="text-subtitle-2 font-weight-black my-2 text-blue">Segments</h3>
-          <v-btn class="mb-4" color="blue">ADD SEGMENT</v-btn>
+          <v-row v-if="segments.length > 0" class="mb-8 w-100">
+            <template v-for="(segment, key) in segments" :key="key">
+              <v-col cols="3">
+                <v-select
+                  v-model="segment.ring"
+                  hide-details
+                  item-title="label"
+                  item-value="value"
+                  :items="rings"
+                />
+              </v-col>
+              <v-col cols="3">
+                <v-select
+                  v-model="segment.number"
+                  hide-details
+                  :items="[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"
+                />
+              </v-col>
+              <v-col cols="3">
+                <v-select
+                  v-model="segment.color"
+                  hide-details
+                  item-title="label"
+                  item-value="color"
+                  :items="colors"
+                />
+              </v-col>
+              <v-col cols="3">
+                <v-select
+                  v-model="segment.isPartialFilled"
+                  hide-details
+                  item-title="label"
+                  item-value="value"
+                  :items="filledType"
+                />
+              </v-col>
+            </template>
+          </v-row>
+          <div class="d-flex align-center justify-center flex-wrap text-center mx-auto px-4 mb-4">
+            <v-btn color="blue" @click="addSegment">ADD SEGMENT</v-btn>
+            <v-btn
+              v-if="segments.length > 0"
+              class="ml-4"
+              color="red"
+              variant="text"
+              @click="removeSegment"
+            >REMOVE LAST SEGMENT</v-btn>
+          </div>
         </v-sheet>
+      </v-col>
+      <v-col cols="4">
+        <SvgDartboard class="w-100" />
       </v-col>
 
     </v-row>
@@ -75,6 +131,7 @@
   import { onMounted, ref } from 'vue';
   import { useRules } from 'vuetify/labs/rules'
   import { useBluePrinceStore } from '@/stores/blue-prince';
+  import SvgDartboard from '@/components/blue-prince/SvgDartboard.vue';
 
   // Data
   const breadcrumbs = [
@@ -94,7 +151,24 @@
       href: '/blue-prince/billiard-room',
     },
   ]
-  const stages = ['center-circle', 'first-ring', 'second-ring', 'thrid-ring', 'fourth-ring', 'exterior-ring']
+  const rings = [
+    {
+      label: 'Primer anillo',
+      value: 1,
+    },
+    {
+      label: 'Segundo anillo',
+      value: 2,
+    },
+    {
+      label: 'Tercer anillo',
+      value: 3,
+    },
+    {
+      label: 'Cuarto anillo',
+      value: 4,
+    },
+  ]
   const colors = [
     {
       label: 'Azul',
@@ -119,12 +193,12 @@
   ]
   const filledType = [
     {
-      type: 'full-filled',
-      operation: 'none',
+      label: 'Casilla llena',
+      value: false,
     },
     {
-      type: '1/3-filled',
-      operation: 'divide-3',
+      label: 'Pintado un tercio',
+      value: true,
     },
   ]
   const modifierTypes = [
@@ -219,6 +293,17 @@
   }
   const removeModifier = () => {
     modifiers.value.pop()
+  }
+  const addSegment = () => {
+    segments.value.push({
+      ring: 1,
+      number: 1, // opcional, aplica a operaciones de este color
+      color: 'blue', // 'square', 'reverse', 'repeat', etc.
+      isPartialFilled: false, // 'square', 'reverse', 'repeat', etc.
+    })
+  }
+  const removeSegment = () => {
+    segments.value.pop()
   }
 
 </script>
