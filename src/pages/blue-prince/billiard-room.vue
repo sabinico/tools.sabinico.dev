@@ -18,12 +18,18 @@
 
     <v-row class="mb-8">
       <v-col cols="12">
-        <div class="mb-8 text-center">
-          <h1 class="text-h2 font-weight-bold mb-2">Billiard Room Puzzle</h1>
+        <div class="mb-8">
+          <h1 class="text-h2 text-center font-weight-bold mb-2">Billiard Room Puzzle</h1>
+          <v-alert
+            density="compact"
+            text="Esta herramienta está en desarrollo y no esta completamente finalizada, es posible que encuentres fallos o errores al utilizarla, notificalos al desarrollador para solucionarlos lo antes posible"
+            title="Herramienta en desarrollo"
+            type="warning"
+          />
         </div>
       </v-col>
       <v-col
-        cols="8"
+        cols="6"
       >
         <v-sheet
           class="d-flex flex-column align-center justify-center flex-wrap text-center mx-auto px-4"
@@ -119,8 +125,12 @@
           </div>
         </v-sheet>
       </v-col>
+      <v-col cols="2">
+        <h1>¿RESULT?</h1>
+        <h2>{{ solve }}</h2>
+      </v-col>
       <v-col cols="4">
-        <SvgDartboard class="w-100" />
+        <SvgDartboard class="w-100" :modifiers="modifiers" :segments="segments" :solution="solve" />
       </v-col>
 
     </v-row>
@@ -128,8 +138,7 @@
 
 </template>
 <script setup>
-  import { onMounted, ref } from 'vue';
-  import { useRules } from 'vuetify/labs/rules'
+  import { computed, onMounted, ref } from 'vue';
   import { useBluePrinceStore } from '@/stores/blue-prince';
   import SvgDartboard from '@/components/blue-prince/SvgDartboard.vue';
 
@@ -212,55 +221,25 @@
       label: 'Diamante',
       operation: 'reverse',
     },
+    {
+      type: 'round-1',
+      label: '2 lineas onduladas',
+      operation: 'round-1',
+    },
+    {
+      type: 'round-10',
+      label: '4 lineas onduladas',
+      operation: 'round-10',
+    },
+    {
+      type: 'round-100',
+      label: '6 lineas onduladas',
+      operation: 'round-100',
+    },
   ]
   const modifiers = ref([])
   const segments = ref([])
-  const validCodes = [
-    {
-      code: 'MAY8',
-      envelope: 1,
-      room: 'UNDERPASS',
-      gems: 0,
-    },
-    {
-      code: '1208',
-      envelope: 2,
-      room: 'ESTUDIO',
-      gems: 1,
-    },
-    {
-      code: '1225',
-      envelope: 4,
-      room: 'BOUDOIR',
-      gems: 1,
-    },
-    {
-      code: '0811',
-      envelope: 5,
-      room: 'DRAFTING ROOM',
-      gems: 0,
-    },
-    {
-      code: '0415',
-      envelope: 6,
-      room: 'DRAWING ROOM',
-      gems: 1,
-    },
-    {
-      code: 'DATE',
-      envelope: 7,
-      room: 'BUNKER',
-      gems: 0,
-    },
-    {
-      code: '0303',
-      envelope: 8,
-      room: 'OFFICE',
-      gems: 1,
-    },
-  ]
   const store = useBluePrinceStore()
-  const rules = useRules()
 
   // Hooks
   onMounted(() => {
@@ -281,6 +260,10 @@
   })
 
   // Computeds
+  const solve = computed(() => {
+    if(segments.value.length == 0) return 0
+    return solvePuzzle(segments.value, modifiers.value)
+  })
 
 
   // Methods
@@ -305,5 +288,70 @@
   const removeSegment = () => {
     segments.value.pop()
   }
+  const getSegmentValue = seg => {
+    return seg.isPartialFilled ? seg.number / 3 : seg.number
+  }
+
+  const getOperation = color => {
+    switch (color) {
+      case 'blue': return (a, b) => a + b
+      case 'yellow': return (a, b) => a - b
+      case 'pink': return (a, b) => a * b
+      case 'purple': return (a, b) => a / b
+      default: return (a, b) => a
+    }
+  }
+
+  const applyModifiers = (value, segment, modifiers) => {
+    for (const mod of modifiers) {
+      if (mod.position === 'center' && mod.color === segment.color) {
+        switch (mod.type) {
+          case 'square': value = Math.pow(value, 2); break
+          case 'diamond': value = parseInt(String(value).split('').reverse().join('')); break
+          case 'round-1': value = Math.round(value); break
+          case 'round-10': value = Math.round(value / 10) * 10; break
+          case 'round-100': value = Math.round(value / 100) * 100; break
+        // Otros si necesitas
+        }
+      }
+    }
+    return value
+  }
+
+  const applyFinalModifiers = (value, modifiers) => {
+    for (const mod of modifiers) {
+      if (mod.position === 'border') {
+        switch (mod.type) {
+          case 'half': value = value / 2; break
+          case 'round-1': value = Math.round(value); break
+          case 'round-10': value = Math.round(value / 10) * 10; break
+          case 'round-100': value = Math.round(value / 100) * 100; break
+        }
+      }
+    }
+    return value
+  }
+  const solvePuzzle = (segments, modifiers) => {
+
+    // Ordenamos los segmentos desde el centro hacia afuera
+    const orderedSegments = [...segments].sort((a, b) => a.ring - b.ring)
+
+    // Inicializamos valor con el primer número procesado
+    let value = applyModifiers(getSegmentValue(orderedSegments[0]), orderedSegments[0], modifiers)
+
+    // Iteramos sobre los siguientes segmentos
+    for (let i = 1; i < orderedSegments.length; i++) {
+      const seg = orderedSegments[i]
+      const num = applyModifiers(getSegmentValue(seg), seg, modifiers)
+      const op = getOperation(seg.color)
+      value = op(value, num)
+    }
+
+    // Al final aplicamos modificadores de tipo 'border' si hay
+    value = applyFinalModifiers(value, modifiers)
+
+    return value
+  }
+
 
 </script>
