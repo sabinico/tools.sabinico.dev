@@ -25,7 +25,7 @@
               <v-btn v-bind="activatorProps" color="red" variant="text">INTRODUCIR CÓDIGO</v-btn>
             </template>
             <template #default="{ isActive }">
-              <v-card subtitle="Ingresa la misma ofrenda que que realices en el juego" title="Realiza una ofrenda">
+              <v-card subtitle="Introduce el código que has usado para desbloquear la caja fuerte" title="Nueva Caja Fuerte desbloqueada">
                 <v-card-text>
                   <v-form>
                     <v-row>
