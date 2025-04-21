@@ -113,7 +113,7 @@
       image: imgCardJournal,
     },
     {
-      href: '/blue-prince',
+      href: '/blue-prince/billiard-room',
       subtitle: 'Resuelve el puzzle con explicaciones',
       title: 'Puzzle de dardos',
       unlock: 'room_billiard',
