@@ -15,7 +15,7 @@
   </v-breadcrumbs>
   <v-container>
     <v-row>
-      <v-col cols="4">
+      <v-col cols="12" md="4">
         <v-card class="mx-auto">
           <v-toolbar color="purple">
             <v-toolbar-title>Diario de notas</v-toolbar-title>
@@ -100,7 +100,7 @@
 
         </v-card>
       </v-col>
-      <v-col v-if="noteSelection.length > 0" cols="8">
+      <v-col v-if="noteSelection.length > 0" cols="12" md="8">
         <template v-if="selectedNote.type == 'note'">
           <v-sheet
             class="d-flex flex-column flex-wrap mx-auto px-4"

@@ -20,6 +20,7 @@
       <v-col cols="12">
         <div class="mb-8">
           <h1 class="text-h2 text-center font-weight-bold mb-2">Billiard Room Puzzle</h1>
+          <h2 v-if="solve != 0" :class="`text-h5 text-center font-weight-bold mb-2 ${[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20].includes(solve) ? 'text-green' : 'text-red'}`">Solution: {{ solve }}</h2>
           <v-alert
             density="compact"
             text="Esta herramienta está en desarrollo y no esta completamente finalizada, es posible que encuentres fallos o errores al utilizarla, notificalos al desarrollador para solucionarlos lo antes posible"
@@ -29,7 +30,8 @@
         </div>
       </v-col>
       <v-col
-        cols="6"
+        cols="12"
+        md="6"
       >
         <v-sheet
           class="d-flex flex-column align-center justify-center flex-wrap text-center mx-auto px-4"
@@ -71,7 +73,7 @@
               color="red"
               variant="text"
               @click="removeModifier"
-            >REMOVE LAST MODIIFIER</v-btn>
+            >REMOVE LAST MODIFIER</v-btn>
           </div>
 
           <h3 class="text-subtitle-2 font-weight-black my-2 text-blue">Segments</h3>
@@ -125,11 +127,8 @@
           </div>
         </v-sheet>
       </v-col>
-      <v-col cols="2">
-        <h1>¿RESULT?</h1>
-        <h2>{{ solve }}</h2>
-      </v-col>
-      <v-col cols="4">
+      <v-col cols="12" md="2" />
+      <v-col cols="12" md="4">
         <SvgDartboard class="w-100" :modifiers="modifiers" :segments="segments" :solution="solve" />
       </v-col>
 
@@ -298,7 +297,6 @@
       case 'yellow': return (a, b) => a - b
       case 'pink': return (a, b) => a * b
       case 'purple': return (a, b) => a / b
-      default: return (a, b) => a
     }
   }
 
@@ -307,11 +305,14 @@
       if (mod.position === 'center' && mod.color === segment.color) {
         switch (mod.type) {
           case 'square': value = Math.pow(value, 2); break
-          case 'diamond': value = parseInt(String(value).split('').reverse().join('')); break
+          case 'diamond': {
+            const reversed = String(Math.abs(Math.floor(value))).split('').reverse().join('')
+            value = parseInt(reversed) * (value < 0 ? -1 : 1)
+            break
+          }
           case 'round-1': value = Math.round(value); break
           case 'round-10': value = Math.round(value / 10) * 10; break
           case 'round-100': value = Math.round(value / 100) * 100; break
-        // Otros si necesitas
         }
       }
     }
@@ -332,25 +333,38 @@
     return value
   }
   const solvePuzzle = (segments, modifiers) => {
+    if (segments.length === 0) return 0
 
-    // Ordenamos los segmentos desde el centro hacia afuera
-    const orderedSegments = [...segments].sort((a, b) => a.ring - b.ring)
+    console.log('Solving...')
+    // Ordenar del anillo más interno al más externo
+    const ordered = [...segments].sort((a, b) => a.ring - b.ring)
 
-    // Inicializamos valor con el primer número procesado
-    let value = applyModifiers(getSegmentValue(orderedSegments[0]), orderedSegments[0], modifiers)
+    // Evaluar el primer valor (se debe ajustar si es amarillo)
+    const first = ordered[0]
+    let acc = getSegmentValue(first)
+    if (first.color === 'yellow') {
+      acc = -acc // si es resta, se empieza desde el negativo
+    }
+    console.log('Init value: ' + acc)
 
-    // Iteramos sobre los siguientes segmentos
-    for (let i = 1; i < orderedSegments.length; i++) {
-      const seg = orderedSegments[i]
-      const num = applyModifiers(getSegmentValue(seg), seg, modifiers)
+    acc = applyModifiers(acc, first, modifiers)
+    console.log('After modifier value: ' + acc)
+
+    // Recorrer los siguientes segmentos
+    for (let i = 1; i < ordered.length; i++) {
+      const seg = ordered[i]
+      const value = getSegmentValue(seg)
       const op = getOperation(seg.color)
-      value = op(value, num)
+      acc = op(acc, value)
+      acc = applyModifiers(acc, seg, modifiers)
+      console.log('Next value: ' + acc)
     }
 
-    // Al final aplicamos modificadores de tipo 'border' si hay
-    value = applyFinalModifiers(value, modifiers)
+    // Aplicar modificadores de tipo 'border'
+    acc = applyFinalModifiers(acc, modifiers)
+    console.log('Final value: ' + acc)
 
-    return value
+    return acc
   }
 
 

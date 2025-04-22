@@ -56,7 +56,7 @@
             </template>
           </v-card>
         </v-col>
-        <v-col v-for="link in links" :key="link.href" cols="6">
+        <v-col v-for="link in links" :key="link.href" cols="12" sm="6">
           <v-card
             class="py-4"
             color="surface-variant"

@@ -57,7 +57,7 @@
   const store = useBluePrinceStore()
   const { hasRequiredUnlocks } = storeToRefs(store)
 
-  const devtools = ['room_billiard']
+  const devtools = []
   const tools = ref({
     room_billiard: {
       title: 'PUZZLE DE DARDOS',

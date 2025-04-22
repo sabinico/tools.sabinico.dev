@@ -130,7 +130,7 @@
       <path id="centro-interior" :class="`fil4 ${colorCenterCircle}`" d="M10923.02 11310.55c8.31,-52.64 24.91,-103.6 49.11,-151.08 24.22,-47.51 55.71,-90.92 93.43,-128.59 37.69,-37.67 81.03,-69.23 128.51,-93.43 47.51,-24.15 98.52,-40.74 151.15,-49.05 52.64,-8.34 106.27,-8.34 158.91,0 52.64,8.31 103.65,24.91 151.15,49.05 47.5,24.2 90.89,55.77 128.56,93.43 37.7,37.67 69.19,81.08 93.38,128.59 24.2,47.48 40.79,98.44 49.13,151.08l-0.13 0.08c8.31,52.64 8.31,106.17 0,158.83l0.13 0.05c-8.34,52.64 -24.93,103.65 -49.13,151.08 -24.2,47.51 -55.69,90.92 -93.38,128.59 -37.67,37.67 -81.05,69.23 -128.56,93.43 -47.51,24.15 -98.52,40.74 -151.15,49.05 -52.64,8.34 -106.27,8.34 -158.91,0 -52.64,-8.31 -103.65,-24.91 -151.15,-49.05 -47.48,-24.2 -90.81,-55.76 -128.51,-93.43 -37.72,-37.67 -69.21,-81.08 -93.43,-128.59 -24.2,-47.43 -40.79,-98.44 -49.11,-151.08 -8.34,-52.64 -8.34,-106.32 0,-158.96z" />
       <rect
         id="symbol-square-interior"
-        :class="`fil6 ${modifiers[0].position == 'center' && modifiers[0].type == 'square' ? 'str1' : 'str0'}`"
+        :class="`fil6 ${modifiers[0] && modifiers[0].position == 'center' && modifiers[0].type == 'square' ? 'str1' : 'str0'}`"
         height="695.63"
         width="695.63"
         x="11077.9"
@@ -138,7 +138,7 @@
       />
       <rect
         id="symbol-square-exterior"
-        :class="`fil6 ${modifiers[1].position == 'center' && modifiers[1].type == 'square' ? 'str1' : 'str0'}`"
+        :class="`fil6 ${modifiers[1] && modifiers[1].position == 'center' && modifiers[1].type == 'square' ? 'str1' : 'str0'}`"
         height="1663.33"
         width="1663.33"
         x="10594.05"
@@ -146,14 +146,14 @@
       />
       <rect
         id="symbol-diamond-interior"
-        :class="`fil6 ${modifiers[0].position == 'center' && modifiers[0].type == 'diamond' ? 'str1' : 'str0'}`"
+        :class="`fil6 ${modifiers[0] && modifiers[0].position == 'center' && modifiers[0].type == 'diamond' ? 'str1' : 'str0'}`"
         height="598.21"
         transform="matrix(0.822255 -0.822255 0.822255 0.822255 10933.8 11390)"
         width="598.21"
       />
       <rect
         id="symbol-diamond-exterior"
-        :class="`fil6 ${modifiers[1].position == 'center' && modifiers[1].type == 'diamond' ? 'str1' : 'str0'}`"
+        :class="`fil6 ${modifiers[1] && modifiers[1].position == 'center' && modifiers[1].type == 'diamond' ? 'str1' : 'str0'}`"
         height="598.21"
         transform="matrix(1.96611 -1.96611 1.96611 1.96611 10249.6 11390)"
         width="598.21"
