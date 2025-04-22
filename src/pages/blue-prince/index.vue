@@ -76,6 +76,7 @@
 
 <script setup>
   import { useBluePrinceStore } from '@/stores/blue-prince';
+  import { useHead } from '@unhead/vue'
 
   import imgCardBlueKey from '../../assets/games/blue_prince/blue_prince-bluekey-card.png';
   import imgCardJournal from '../../assets/games/blue_prince/blue_prince-journal-card.png';
@@ -86,6 +87,13 @@
   import imgCardRedEnvelope from '../../assets/games/blue_prince/blue_prince-redenvelope-card.png';
 
   const store = useBluePrinceStore()
+
+  useHead({
+    title: 'Blue Prince',
+    meta: [
+      { name: 'description', content: 'Herramientas y utilidades para jugadores de Blue Prince, desde cuadernos donde realizar anotaciones de pistas, listas para organizar tus objetivos o herramientas para resolución de puzzles automatizados' },
+    ],
+  })
 
   const breadcrumbs = [
     {

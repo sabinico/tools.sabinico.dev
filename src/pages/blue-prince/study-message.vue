@@ -72,9 +72,17 @@
 
 </template>
 <script setup>
+  import { useHead } from '@unhead/vue'
   import { computed, onMounted, ref } from 'vue';
   import { useRules } from 'vuetify/labs/rules'
   import { useBluePrinceStore } from '@/stores/blue-prince';
+
+  useHead({
+    title: 'Study Message | Blue Prince',
+    meta: [
+      { name: 'description', content: 'Herramienta para ir anotando las distintas letras correspondientes a cada habitación de Blue Prince para descubrir el mensaje secreto que ocultan' },
+    ],
+  })
 
   // Data
   const secretmessage = 'If we count small gates, eight dates crack eight safes';

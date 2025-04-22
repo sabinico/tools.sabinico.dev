@@ -153,6 +153,7 @@
 
 </template>
 <script setup>
+  import { useHead } from '@unhead/vue'
   import { onBeforeMount, onMounted, ref } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useBluePrinceStore } from '@/stores/blue-prince';
@@ -171,6 +172,13 @@
   import imgTinkerer from '@/assets/games/blue_prince/shrine/blessing_tinkerer.png'
   import imgMonk from '@/assets/games/blue_prince/shrine/blessing_monk.png'
   import imgBerrypicker from '@/assets/games/blue_prince/shrine/blessing_berrypicker.png'
+
+  useHead({
+    title: 'Shrine Blessings | Blue Prince',
+    meta: [
+      { name: 'description', content: 'Herramienta para trackear las distintas bendiciones del santuario de Blue Prince según las monedas que hayas ofrecido dentro del juego' },
+    ],
+  })
 
   // Data
   const showEverything = ref(false);

@@ -137,9 +137,17 @@
 
 </template>
 <script setup>
+  import { useHead } from '@unhead/vue'
   import { computed, onMounted, ref } from 'vue';
   import { useBluePrinceStore } from '@/stores/blue-prince';
   import SvgDartboard from '@/components/blue-prince/SvgDartboard.vue';
+
+  useHead({
+    title: 'Billiar Room | Blue Prince',
+    meta: [
+      { name: 'description', content: 'Herramienta para solucionar el puzzle de la diana de dardos de la sala del billar en el juego Blue Prince' },
+    ],
+  })
 
   // Data
   const breadcrumbs = [

@@ -141,8 +141,16 @@
   </v-card>
 </template>
 <script setup>
+  import { useHead } from '@unhead/vue'
   import { computed, onMounted, ref } from 'vue';
   import { useBluePrinceStore } from '@/stores/blue-prince';
+
+  useHead({
+    title: 'Objectives | Blue Prince',
+    meta: [
+      { name: 'description', content: 'Herramienta para tener una lista de objetivos que deseas cumplir dentro del juego y no olvidarte de nada' },
+    ],
+  })
 
   // Data
   const breadcrumbs = [

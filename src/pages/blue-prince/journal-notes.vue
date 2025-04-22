@@ -132,9 +132,17 @@
 
 </template>
 <script setup>
+  import { useHead } from '@unhead/vue'
   import { computed, onMounted, ref } from 'vue';
   import { useBluePrinceStore } from '@/stores/blue-prince';
   import JournalNoteFormDialog from '@/components/blue-prince/JournalNoteFormDialog.vue';
+
+  useHead({
+    title: 'Journal Notes | Blue Prince',
+    meta: [
+      { name: 'description', content: 'Herramienta para tomar apuntes de pistas y post-its que encuentres en el juego, te permite organizarlos y clasificarlos con etiquetas' },
+    ],
+  })
 
   // Data
   const breadcrumbs = [

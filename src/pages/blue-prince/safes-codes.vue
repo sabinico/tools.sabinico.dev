@@ -84,11 +84,19 @@
 
 </template>
 <script setup>
+  import { useHead } from '@unhead/vue'
   import { onMounted, ref } from 'vue';
   import { useRules } from 'vuetify/labs/rules'
   import { useBluePrinceStore } from '@/stores/blue-prince';
 
   import iconGem from '@/assets/games/blue_prince/blue_prince-gem-icon.png'
+
+  useHead({
+    title: 'Safes Codes | Blue Prince',
+    meta: [
+      { name: 'description', content: 'Herramienta para dejar anotados los códigos de las cajas fuertes de Blue Prince que vayas encontrando y desbloqueando' },
+    ],
+  })
 
 
   // Data
