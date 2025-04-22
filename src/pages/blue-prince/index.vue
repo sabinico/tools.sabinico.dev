@@ -16,6 +16,7 @@
   <v-container class="fill-height" max-width="900">
     <div>
       <v-img
+        alt="Logo del juego Blue Prince"
         class="mb-4"
         height="150"
         src="@/assets/games/blue_prince/blue_prince-logo.png"
