@@ -10,8 +10,13 @@ import { createRulesPlugin } from 'vuetify/labs/rules'
 import pinia from '@/stores'
 import router from '@/router'
 import { createHead } from '@unhead/vue/client'
+import { createGtag } from 'vue-gtag'
 
 const head = createHead()
+const gtag = createGtag({
+  tagId: 'G-TQ6WTX8GMY',
+})
+
 
 export function registerPlugins (app) {
   app
@@ -19,5 +24,6 @@ export function registerPlugins (app) {
     .use(router)
     .use(pinia)
     .use(head)
+    .use(gtag)
     .use(createRulesPlugin({}, vuetify.locale))
 }
