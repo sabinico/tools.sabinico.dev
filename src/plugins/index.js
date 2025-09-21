@@ -15,6 +15,10 @@ import { createGtag } from 'vue-gtag'
 const head = createHead()
 const gtag = createGtag({
   tagId: 'G-TQ6WTX8GMY',
+  pageTracker: {
+    router,
+    useScreenview: true,
+  },
 })
 
 
