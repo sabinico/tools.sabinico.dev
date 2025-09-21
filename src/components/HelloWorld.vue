@@ -43,11 +43,13 @@
           <v-card
             class="py-4"
             color="surface-variant"
+            :href="link.target ? link.href : null"
             :image="link.icon"
             rounded="lg"
             :subtitle="link.subtitle"
+            :target="link.target ? link.target : null"
             :title="link.title"
-            :to="link.href"
+            :to="link.target ? null : link.href"
             variant="tonal"
           />
         </v-col>
@@ -59,6 +61,7 @@
 <script setup>
   import logovintage from '../assets/games/vintage_story-card.png';
   import logoBluePrince from '../assets/games/blue_prince/blue_prince-card.png';
+  import logoLeagueOfLegends from '../assets/games/lol-card.png';
   const links = [
     {
       href: '/vintage-story',
@@ -71,6 +74,13 @@
       icon: logoBluePrince,
       subtitle: 'Cuaderno de notas para jugadores',
       title: 'Blue Prince',
+    },
+    {
+      href: 'https://lol-toolbox-pre.vercel.app/home',
+      target: '_blank',
+      icon: logoLeagueOfLegends,
+      subtitle: 'Explora la API de League of Legends',
+      title: 'LoL Toolbox',
     },
   ]
 </script>
